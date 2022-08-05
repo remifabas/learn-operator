@@ -1,0 +1,14 @@
+# three node (two workers) cluster config
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: worker
+  - role: worker
+  - role: control-plane
+    extraPortMappings: # You can map extra ports from the nodes to the host machine with extraPortMappings:
+      #This can be useful if using NodePort services or daemonsets exposing host ports.
+      #Note: binding the listenAddress to 127.0.0.1 may affect your ability to access the service.
+      - containerPort: 30000
+        hostPort: 30000
+        listenAddress: "0.0.0.0" # Optional, defaults to "0.0.0.0"
+        protocol: tcp # Optional, defaults to tcp
